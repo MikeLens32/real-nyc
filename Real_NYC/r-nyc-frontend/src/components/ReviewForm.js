@@ -30,8 +30,8 @@ const ReviewForm = ({ setReviews }) => {
         const formInfo = {
             title: formInfo.title,
             content: formInfo.content,
-            art: formInfo.art,
-            tags: formInfo.tags,
+            image: formInfo.image,
+            tags: formInfo.tags
         }
             fetch('http://127.0.0.1:9393/reviews', {
                 method: "POST",

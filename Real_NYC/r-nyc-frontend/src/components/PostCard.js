@@ -1,39 +1,62 @@
 import React from 'react'
 
-const PostCard = ({ comments=[], setComments, reviews=[] }) => {
+const PostCard = ({comment, setComment, reviews}) => {
 
     function handleText(e){
-        setComments(e.target.text)
+        setComment(e.target.text)
     }
 
     function handleRating(e){
-        setComments(e.target.rating)
+        setComment(e.target.rating)
     }
 
     function handleArt(e){
-        setComments(e.target.art)
+        setComment(e.target.art)
     }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        const commentInfo = {
+            text: commentInfo.text,
+            rating: commentInfo.rating,
+            image: commentInfo.image
+        }
+            fetch('http://127.0.0.1:9393/reviews', {
+                method: "POST",
+                headers:{
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(commentInfo)
+            })
+            .then(r => r.json()) 
+            .then(data => setComment(currentComments => [...currentComments, data]))
+            .catch(error => console.log(error))
+            setFormData({
+                text: '',
+                rating: '',
+                image: ''
+            })
+        }
 
     return (
         <div>
             {reviews.map((review) => {
             <>
                 <h1>{review.title}</h1>
-                <img src={reviews.image} atl={reviews.title} />
-                <p>{reviews.description}</p>
-                <p>{reviews.tags}</p>
-                {/* How am I going to display the comments and have them link to the correct areas */}
-                {comments.map((comment) => {
+                <img src={review.image} atl={review.title} />
+                <p>{review.description}</p>
+                <p>{review.tags}</p>
+                {review.comments.map((comm) => {
                     <>
-                    <h3>{comment.text}</h3>
-                    <img src={comment.image} />
-                    <p>{comment.rating}</p>
+                    <h3>{comm.text}</h3>
+                    <img src={comm.image} />
+                    <p>{comm.rating}</p>
                     </>
                 })}
-            <form>
-                <input name={comments.text} require type='text' onChange={handleText} value={comments.value}/>
-                <input name={comments.rating} require type='text' onChange={handleRating} value={comments.value}/>
-                <input name={comments.image} onChange={handleArt} value={comments.value}/>
+            <form onSubmit={handleSubmit}>
+                <input name={comment.text} require type='text' onChange={handleText} value={comment.value}/>
+                <input name={comment.rating} require type='text' onChange={handleRating} value={comment.value}/>
+                <input name={comment.image} onChange={handleArt} value={comment.value}/>
             </form>
             </>
             })}

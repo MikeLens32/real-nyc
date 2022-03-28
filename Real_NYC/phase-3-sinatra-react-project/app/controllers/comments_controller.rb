@@ -1,37 +1,46 @@
 class CommentsController < ApplicationController
 
-  # GET: /comments
   get "/comments" do
     Comment.all.to_json
   end
 
-  # GET: /comments/new
-  get "/comments/new" do
-    erb :"/comments/new.html"
-  end
-
-  # POST: /comments
   post "/comments" do
-    redirect "/comments"
+    comment = Comment.create(text: params[:text], rating: params[:rating], post_id: params[:post_id], image: params[:image])
+    if 
+      comment.to_json
+    else
+      comment.errors.full_messages.to_sentence
   end
 
-  # GET: /comments/5
   get "/comments/:id" do
-    erb :"/comments/show.html"
+    find_comment
+    if
+      @comment.to_json
+    else
+      @comment.errors.full_messages.to_sentence
+    end
   end
 
-  # GET: /comments/5/edit
-  get "/comments/:id/edit" do
-    erb :"/comments/edit.html"
-  end
-
-  # PATCH: /comments/5
   patch "/comments/:id" do
-    redirect "/comments/:id"
+    find_comment
+    if @comment && @comment.update(params)
+      @comment.to_json
+    else !@comment
+      comment.errors.full_messages.to_sentence
   end
 
-  # DELETE: /comments/5/delete
   delete "/comments/:id/delete" do
-    redirect "/comments"
+    find_comment
+    if @comment&.destroy
+      "Record was successfully destroyed"
+    else
+      {errors: "Record not found with id:#{params[:id]}"}.to_json
   end
+
+  private
+
+  def find_comment
+    @comment = Comment.find_by(id: params[:id])
+  end
+
 end

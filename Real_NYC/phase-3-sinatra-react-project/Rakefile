@@ -28,7 +28,7 @@ task :console do
   Pry.start
 end
 
-desc "rest db"
+desc "rest database"
 task :rest_db do
   puts "Dropping the db..."
   system "rm ./db/development.sqlite3"

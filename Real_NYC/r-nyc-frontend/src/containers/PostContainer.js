@@ -19,7 +19,7 @@ function PostContainer({ reviews }) {
 
     return(
         <div>
-            <PostCard reviews={reviews} comments={comments} setComments={setComments} />
+            <PostCard reviews={reviews} comment={comments} setComment={setComments} />
         </div>
     )
 }
