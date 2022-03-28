@@ -1,10 +1,13 @@
 import React from 'react'
 import ReviewForm from './ReviewForm'
+import "../css/Review.css"
 
-const Review = ({ setReviews }) => {
+
+const Review = ({ reviews, setReviews }) => {
     return (
         <div>
-            <ReviewForm setReviews={setReviews} />
+            <img src={window.location.origin + "/central_p.jpg"} alt="Central Park" />
+            <ReviewForm reviews={reviews} setReviews={setReviews} />
         </div>
     )
 }

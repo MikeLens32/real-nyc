@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react"
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Welcome from "./Welcome";
 import NYC from "./NYC";
 import Review from "./Review";
 import { Navbar, Nav, Container } from "react-bootstrap"
-// import image from "../White ML Logo.png
 
 const NavBar = () => {
 
@@ -22,14 +21,6 @@ const NavBar = () => {
     .catch((err) => alert(err))
   }, [])
 
-
-  const style = {
-    width: "2em",
-    margin: "0.5em",
-    color: "black",
-    textDecoration: "none"
-  }
-
   return (
     <Router>
     <div>
@@ -46,17 +37,15 @@ const NavBar = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    </div>
-    <div>
       <Switch>
-        <Route eact path="/">
+        <Route exact path="/">
           <Welcome />
         </Route>
-        <Route eact path="/NYC">
-          <NYC />
+        <Route exact path="/NYC">
+          <NYC review={reviews}/>
         </Route>
-        <Route eact path="/Review">
-          <Review />
+        <Route exact path="/Review">
+          <Review reviews={reviews} setReviews={setReviews}/>
         </Route>
       </Switch>
     </div>
