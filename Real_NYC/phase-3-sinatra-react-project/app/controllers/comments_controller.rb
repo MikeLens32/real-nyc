@@ -10,6 +10,7 @@ class CommentsController < ApplicationController
       comment.to_json
     else
       comment.errors.full_messages.to_sentence
+    end
   end
 
   get "/comments/:id" do
@@ -27,6 +28,7 @@ class CommentsController < ApplicationController
       @comment.to_json
     else !@comment
       comment.errors.full_messages.to_sentence
+    end
   end
 
   delete "/comments/:id/delete" do
@@ -35,6 +37,7 @@ class CommentsController < ApplicationController
       "Record was successfully destroyed"
     else
       {errors: "Record not found with id:#{params[:id]}"}.to_json
+    end
   end
 
   private
@@ -42,5 +45,4 @@ class CommentsController < ApplicationController
   def find_comment
     @comment = Comment.find_by(id: params[:id])
   end
-
 end

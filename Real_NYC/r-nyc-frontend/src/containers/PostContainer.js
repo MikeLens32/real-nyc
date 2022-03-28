@@ -9,17 +9,29 @@ function PostContainer({ reviews }) {
         image: ''
     })
 
+    const [loading, setLoading] = useState(true)
+
     useEffect(() => {
-        fetch('http://127.0.0.1:9393/comments')
-        .then(r => r.json())
-        .then((commentData) => setComments(commentData))
-        .catch((err) => alert(err))
+        const fetchData = async () =>{
+            try {
+                const resp = await fetch('http://localhost:9393/comments')
+                const data = await resp.json()
+                setComments(data)
+                setLoading(false)
+            } catch (error) {
+                alert(error)
+            }
+        }
+
+        fetchData()
+
     }, [])
 
+    if (loading) return <h1>Loading...</h1>
 
     return(
         <div>
-            <PostCard reviews={reviews} comment={comments} setComment={setComments} />
+            <PostCard reviews={reviews} comments={comments} />
         </div>
     )
 }

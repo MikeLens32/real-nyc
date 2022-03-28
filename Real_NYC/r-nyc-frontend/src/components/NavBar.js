@@ -15,7 +15,7 @@ const NavBar = () => {
   })
 
   useEffect(() => {
-    fetch('')
+    fetch('http://127.0.0.1:9393/reviews')
     .then(r => r.json())
     .then((reviewData) => setReviews(reviewData))
     .catch((err) => alert(err))
@@ -45,7 +45,7 @@ const NavBar = () => {
           <NYC review={reviews}/>
         </Route>
         <Route exact path="/Review">
-          <Review reviews={reviews} setReviews={setReviews}/>
+          <Review setReviews={setReviews}/>
         </Route>
       </Switch>
     </div>

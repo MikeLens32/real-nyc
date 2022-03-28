@@ -1,42 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-const PostCard = ({comment, setComment, reviews}) => {
+const PostCard = ({ reviews, comments }) => {
 
-    function handleText(e){
-        setComment(e.target.text)
+    const [psComment, setPsComments] = useState({
+        text: "",
+        rating: "",
+        image: ""
+    })
+
+    function handleChange(e) {
+        setPsComments({
+            ...psComment,
+            [e.target.name]: e.target.value
+        })
     }
 
-    function handleRating(e){
-        setComment(e.target.rating)
-    }
-
-    function handleArt(e){
-        setComment(e.target.art)
-    }
-
-    function handleSubmit(e) {
-        e.preventDefault();
-        const commentInfo = {
-            text: comment.text,
-            rating: comment.rating,
-            image: comment.image
-        }
-            fetch('http://127.0.0.1:9393/comments', {
-                method: "POST",
-                headers:{
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(commentInfo)
-            })
-            .then(r => r.json()) 
-            .then(data => setComment(currentComments => [...currentComments, data]))
-            .catch(error => console.log(error))
-            setComment({
-                text: '',
-                rating: '',
-                image: ''
-            })
-        }
+    // function handleSubmit(e) {
+    //     e.preventDefault();
+    //     const commentInfo = {
+    //         text: comment.text,
+    //         rating: comment.rating,
+    //         image: comment.image
+    //     }
+    //         fetch('http://127.0.0.1:9393/comments', {
+    //             method: "POST",
+    //             headers:{
+    //                 "Content-Type": "application/json"
+    //             },
+    //             body: JSON.stringify(commentInfo)
+    //         })
+    //         .then(r => r.json()) 
+    //         .then(data => setComment(currentComments => [...currentComments, data]))
+    //         .catch(error => console.log(error))
+    //         setComment({
+    //             text: '',
+    //             rating: '',
+    //             image: ''
+    //         })
+    //     }
 
     return (
         <div>
@@ -46,18 +47,18 @@ const PostCard = ({comment, setComment, reviews}) => {
                 {/* <img src={review.image} atl={review.title} /> */}
                 <p>{review.description}</p>
                 <p>{review.tags}</p>
-                {review.comments.map((comm) => {
+                {/* {review.comments.map((comm) => {
                     <div>
                     <h3>{comm.text}</h3>
-                    {/* <img src={comm.image} /> */}
+                    <img src={comm.image} />
                     <p>{comm.rating}</p>
                     </div>
-                })}
-            <form onSubmit={handleSubmit}>
+                })} */}
+            {/* <form >
                 <input name={comment.text} require type='text' onChange={handleText} value={comment.value}/>
                 <input name={comment.rating} require type='text' onChange={handleRating} value={comment.value}/>
                 <input name={comment.image} onChange={handleArt} value={comment.value}/>
-            </form>
+            </form> */}
             </div>
             })}
         </div>
