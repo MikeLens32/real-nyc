@@ -1,7 +1,7 @@
 import React from 'react'
 import PostContainer from '../containers/PostContainer'
 
-const ToDo = ({ reviews }) => {
+const NYC = ({ reviews }) => {
     return (
         <div>
             <PostContainer reviews={reviews} />
@@ -9,4 +9,4 @@ const ToDo = ({ reviews }) => {
     )
 }
 
-export default ToDo
+export default NYC

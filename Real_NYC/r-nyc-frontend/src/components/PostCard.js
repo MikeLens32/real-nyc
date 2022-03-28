@@ -17,11 +17,11 @@ const PostCard = ({comment, setComment, reviews}) => {
     function handleSubmit(e) {
         e.preventDefault();
         const commentInfo = {
-            text: commentInfo.text,
-            rating: commentInfo.rating,
-            image: commentInfo.image
+            text: comment.text,
+            rating: comment.rating,
+            image: comment.image
         }
-            fetch('http://127.0.0.1:9393/reviews', {
+            fetch('http://127.0.0.1:9393/comments', {
                 method: "POST",
                 headers:{
                     "Content-Type": "application/json"
@@ -31,7 +31,7 @@ const PostCard = ({comment, setComment, reviews}) => {
             .then(r => r.json()) 
             .then(data => setComment(currentComments => [...currentComments, data]))
             .catch(error => console.log(error))
-            setFormData({
+            setComment({
                 text: '',
                 rating: '',
                 image: ''
@@ -41,24 +41,24 @@ const PostCard = ({comment, setComment, reviews}) => {
     return (
         <div>
             {reviews.map((review) => {
-            <>
+            <div>
                 <h1>{review.title}</h1>
-                <img src={review.image} atl={review.title} />
+                {/* <img src={review.image} atl={review.title} /> */}
                 <p>{review.description}</p>
                 <p>{review.tags}</p>
                 {review.comments.map((comm) => {
-                    <>
+                    <div>
                     <h3>{comm.text}</h3>
-                    <img src={comm.image} />
+                    {/* <img src={comm.image} /> */}
                     <p>{comm.rating}</p>
-                    </>
+                    </div>
                 })}
             <form onSubmit={handleSubmit}>
                 <input name={comment.text} require type='text' onChange={handleText} value={comment.value}/>
                 <input name={comment.rating} require type='text' onChange={handleRating} value={comment.value}/>
                 <input name={comment.image} onChange={handleArt} value={comment.value}/>
             </form>
-            </>
+            </div>
             })}
         </div>
     )

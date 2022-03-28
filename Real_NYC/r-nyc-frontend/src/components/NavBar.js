@@ -1,7 +1,8 @@
+import React, { useState, useEffect } from "react"
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import Welcome from "./Welcome";
-import ToDo from "./To-Do";
-import Review from "./Review"
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import NYC from "./NYC";
+import Review from "./Review";
 import { Navbar, Nav, Container } from "react-bootstrap"
 // import image from "../White ML Logo.png
 
@@ -21,38 +22,45 @@ const NavBar = () => {
     .catch((err) => alert(err))
   }, [])
 
+
+  const style = {
+    width: "2em",
+    margin: "0.5em",
+    color: "black",
+    textDecoration: "none"
+  }
+
   return (
+    <Router>
     <div>
-      <Router>
-      <div className="NavBar">
-        <Navbar bg="blue" variant="blue">
+      <Navbar bg="dark" variant={"dark"} expand="lg">
         <Container>
-        <Navbar.Brand path="/">
-          {/* <img className="ML" src={image} alt="Mike_Lens"/> */}
-        </Navbar.Brand>
+          <Navbar.Brand as={Link} to={'/'}>NYC</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-            <Nav.Link as={Link} to={"/"}>Welcome</Nav.Link>
-            <Nav.Link as={Link} to={"/ToDo"}>NYC</Nav.Link>
-            <Nav.Link as={Link} to={"/Review"}>Review</Nav.Link>
+              <Nav.Link as={Link} to={'/'} >Home</Nav.Link>
+              <Nav.Link as={Link} to={'/NYC'}>NYC</Nav.Link>
+              <Nav.Link as={Link} to={'/Review'}>Review</Nav.Link>
             </Nav>
+          </Navbar.Collapse>
         </Container>
-        </Navbar>
-      </div>
-      <div>
-      <Switch >
-        <Route exact path="/">
+      </Navbar>
+    </div>
+    <div>
+      <Switch>
+        <Route eact path="/">
           <Welcome />
         </Route>
-        <Route exact path="/ToDo">
-          <ToDo reviews={reviews} />
+        <Route eact path="/NYC">
+          <NYC />
         </Route>
-        <Route exact path="/Review">
-          <Review setReviews={setReviews} />
+        <Route eact path="/Review">
+          <Review />
         </Route>
       </Switch>
-      </div>
-      </Router>
     </div>
+    </Router>
     )
 }
 
