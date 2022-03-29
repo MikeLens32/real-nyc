@@ -7,30 +7,6 @@ import { Navbar, Nav, Container } from "react-bootstrap"
 
 const NavBar = () => {
 
-  const [reviews, setReviews] = useState({
-    title: '',
-    location: '',
-    description: '',
-    image: '',
-    price: '',
-    tags: '',
-  })
-
-  useEffect(() => {
-    const fetchData = async () =>{
-        try {
-            const resp = await fetch('http://localhost:9393/reviews')
-            const data = await resp.json()
-            setReviews(data)
-        } catch (error) {
-            alert(error)
-        }
-    }
-
-    fetchData()
-
-}, [])
-
   return (
     <Router>
     <div>
@@ -52,10 +28,10 @@ const NavBar = () => {
           <Welcome />
         </Route>
         <Route exact path="/NYC">
-          <NYC review={reviews}/>
+          <NYC />
         </Route>
         <Route exact path="/Review">
-          <Review setReviews={setReviews}/>
+          <Review />
         </Route>
       </Switch>
     </div>
