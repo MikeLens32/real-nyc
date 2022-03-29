@@ -9,17 +9,27 @@ const NavBar = () => {
 
   const [reviews, setReviews] = useState({
     title: '',
+    location: '',
     description: '',
     image: '',
+    price: '',
     tags: '',
   })
 
   useEffect(() => {
-    fetch('http://127.0.0.1:9393/reviews')
-    .then(r => r.json())
-    .then((reviewData) => setReviews(reviewData))
-    .catch((err) => alert(err))
-  }, [])
+    const fetchData = async () =>{
+        try {
+            const resp = await fetch('http://localhost:9393/reviews')
+            const data = await resp.json()
+            setReviews(data)
+        } catch (error) {
+            alert(error)
+        }
+    }
+
+    fetchData()
+
+}, [])
 
   return (
     <Router>

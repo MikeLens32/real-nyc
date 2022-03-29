@@ -1,3 +1,5 @@
+require 'pry'
+
 class CommentsController < ApplicationController
 
   get "/comments" do
@@ -6,6 +8,7 @@ class CommentsController < ApplicationController
 
   post "/comments" do
     comment = Comment.create(text: params[:text], rating: params[:rating], post_id: params[:post_id], image: params[:image])
+    binding.pry
     if 
       comment.to_json
     else
