@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { Navbar, Nav, Container } from "react-bootstrap"
 import Welcome from "./Welcome";
 import NYC from "./NYC";
 import Review from "./Review";
-import { Navbar, Nav, Container } from "react-bootstrap"
 
 const NavBar = () => {
 

@@ -1,6 +1,59 @@
 import React, { useState } from 'react'
+import '../css/PostCard.css'
+import Card from 'react-bootstrap/Card'
+import CardGroup from 'react-bootstrap/CardGroup'
+import Form from 'react-bootstrap/Form'
 
 const PostCard = ({ reviews }) => {
+
+    const mapReview = () => {
+        return reviews.map((review) => (
+            <CardGroup className='CardGroup'>
+            <Card style={{ width: '20em' }} onSubmit={handleSubmit}>
+                <Card.Img variant="top" src={review.image} />
+                <Card.Body>
+                <Card.Title>
+                    {review.title}
+                </Card.Title>
+                <Card.Text>
+                    {review.location}
+                </Card.Text>
+                <Card.Text>
+                    {review.description}
+                </Card.Text>
+                <Card.Text>
+                    {review.price}
+                </Card.Text>
+                <Card.Text>
+                    {review.tags}
+                </Card.Text>
+                </Card.Body>
+            <Card.Title>Comments</Card.Title>
+            <Form >
+                <Form.Label>Comment</Form.Label>
+                <Form.Control name="text" required type='text' onChange={handleChange} value={comment.value}/>
+                <br/>
+                <Form.Label>Rating</Form.Label>
+                <Form.Control name="rating" required type='number' onChange={handleChange} value={comment.value}/>
+                <br/>
+                <Form.Label>Image URL</Form.Label>
+                <Form.Control name="image" onChange={handleChange} value={comment.value}/>
+                <br/>
+                <input type='submit' value='Comment'/>
+            </Form>
+            {review.comments.map((comment) => (
+                <Card.Body>
+                    <Card.Img src={comment.image} />
+                    <Card.Text>{comment.text}</Card.Text>
+                    <Card.Text>{comment.rating}</Card.Text>
+                </Card.Body>
+            ))}
+            <br/>
+            </Card>
+            </CardGroup>
+        ))
+    }
+    
 
     const [comment, setComment] = useState({
         text: "",
@@ -31,24 +84,10 @@ const PostCard = ({ reviews }) => {
             })
         }
 
+
     return (
         <div>
-            {reviews.map((review) => {
-            <div>
-                <h1>{review.title}</h1>
-                <img src={review.image} atl={review.title} />
-                <p>{review.description}</p>
-                <p>{review.tags}</p>
-                {review.comments.map((comm) => { 
-                    <div>
-                    <h3>{comm.text}</h3>
-                    <img src={comm.image} />
-                    <p>{comm.rating}</p>
-                    </div>
-                })} 
-            
-            </div>
-            })}
+            {mapReview()}
         </div>
     )
 }

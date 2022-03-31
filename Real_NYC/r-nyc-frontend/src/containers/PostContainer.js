@@ -1,6 +1,4 @@
 import React from "react"
-import ReviewList from "../components/ReviewList"
-// import ReviewCard from "../components/ReviewCard"
 import PostCard from "../components/PostCard"
 
 function PostContainer({ reviews }) {

@@ -3,14 +3,15 @@ import PostContainer from '../containers/PostContainer'
 
 function NYC() {
 
-    const [reviews, setReviews] = useState({
-        title: '',
-        location: '',
-        description: '',
-        image: '',
-        price: '',
-        tags: '',
-      })
+    const [reviews, setReviews] = useState([])
+    //     {
+    //     title: '',
+    //     location: '',
+    //     description: '',
+    //     image: '',
+    //     price: '',
+    //     tags: '',
+    //   })
     
       useEffect(() => {
         const fetchData = async () =>{
@@ -29,7 +30,7 @@ function NYC() {
 
     return (
         <div>
-            <img src={window.location.origin + "/skyline.jpg"} />
+            <img src={window.location.origin + "/skyline.jpg" } alt="NYC" />
             <h1>Let's Take A Tour</h1>
             <PostContainer reviews={reviews} />
         </div>
