@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory, Link } from 'react-router-dom'
 import '../css/PostCard.css'
 import Card from 'react-bootstrap/Card'
 import CardGroup from 'react-bootstrap/CardGroup'
@@ -6,14 +7,16 @@ import Form from 'react-bootstrap/Form'
 
 const PostCard = ({ reviews }) => {
 
+
+
     const mapReview = () => {
         return reviews.map((review) => (
             <CardGroup className='CardGroup'>
-            <Card style={{ width: '20em' }} onSubmit={handleSubmit}>
+            <Card style={{ width: '20em' }} onSubmit={handleSubmit} key={review.id}>
                 <Card.Img variant="top" src={review.image} />
                 <Card.Body>
                 <Card.Title>
-                    {review.title}
+                    <Link to={`http://localhost:9393/reviews/${review.id}`}>{review.title}</Link>
                 </Card.Title>
                 <Card.Text>
                     {review.location}
@@ -42,7 +45,7 @@ const PostCard = ({ reviews }) => {
                 <input type='submit' value='Comment'/>
             </Form>
             {review.comments.map((comment) => (
-                <Card.Body>
+                <Card.Body key={comment.review_id}>
                     <Card.Img src={comment.image} />
                     <Card.Text>{comment.text}</Card.Text>
                     <Card.Text>{comment.rating}</Card.Text>
@@ -68,20 +71,25 @@ const PostCard = ({ reviews }) => {
         })
     }
 
+    const history = useHistory()
+
     function handleSubmit(e) {
         e.preventDefault();
         const newComment = {
+            review_id: comment.review_id,
             text: comment.text,
             rating: comment.rating,
             image: comment.image
         }
-            fetch('http://127.0.0.1:9393/comments', {
+            fetch('http://127.0.0.1:9393/comments/:id', {
                 method: "POST",
                 headers:{
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(newComment)
             })
+            .then(() => history.push('/NYC'))
+            console.log(newComment)
         }
 
 

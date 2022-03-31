@@ -1,14 +1,12 @@
-require 'pry'
-
 class CommentsController < ApplicationController
 
   get "/comments" do
     Comment.all.to_json
   end
 
-  post "/comments" do
-    comment = Comment.create(text: params[:text], rating: params[:rating], post_id: params[:post_id], image: params[:image])
-    binding.pry
+  post "/comments/:id" do
+    comment = Comment.create(text: params[:text], rating: params[:rating], review_id: params[:review_id], image: params[:image])
+    # binding.pry
     if 
       comment.to_json
     else
