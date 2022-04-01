@@ -1,10 +1,14 @@
-# Getting Started with Create React App
+# NYC Frontend In React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This website will be focused on taking in the reviews of people around NYC.
+This will be primarily good for torist that come to NY and have the generic experience of The Statue of Liberty or Time Square.
+New York has so much more to offer and through the reviews and experiences of other people expand your curiousity of what things there are to do.
 
-## Available Scripts
+## The First Steps
 
-In the project directory, you can run:
+I started off my frontend with [npx create-react-app r-nyc- frontend].
+I wrote out and create a visual to understand what components I would need.
+I 
 
 ### `npm start`
 
