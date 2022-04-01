@@ -17,7 +17,7 @@ class ReviewsController < ApplicationController
   
   get "/reviews/:id" do
     find_review
-    if
+    if @review
       @review.to_json(include: :comments)
     else
       {errors: "Record not found with id:#{params[:id]}"}.to_json

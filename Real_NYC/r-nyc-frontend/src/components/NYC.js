@@ -1,17 +1,10 @@
 import { useState, useEffect } from 'react'
 import PostContainer from '../containers/PostContainer'
+import '../css/NYC.css'
 
 function NYC() {
 
     const [reviews, setReviews] = useState([])
-    //     {
-    //     title: '',
-    //     location: '',
-    //     description: '',
-    //     image: '',
-    //     price: '',
-    //     tags: '',
-    //   })
     
       useEffect(() => {
         const fetchData = async () =>{
@@ -30,7 +23,7 @@ function NYC() {
 
     return (
         <div>
-            <img src={window.location.origin + "/skyline.jpg" } alt="NYC" />
+            <img className="NYCBanner" src={window.location.origin + "/skyline.jpg" } alt="NYC" />
             <h1>Let's Take A Tour</h1>
             <PostContainer reviews={reviews} />
         </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useHistory, Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import '../css/PostCard.css'
 import Card from 'react-bootstrap/Card'
 import CardGroup from 'react-bootstrap/CardGroup'
@@ -12,12 +12,10 @@ const PostCard = ({ reviews }) => {
     const mapReview = () => {
         return reviews.map((review) => (
             <CardGroup className='CardGroup'>
-            <Card style={{ width: '20em' }} onSubmit={handleSubmit} key={review.id}>
+            <Card style={{ width: '20em' }} key={review.id}>
                 <Card.Img variant="top" src={review.image} />
                 <Card.Body>
-                <Card.Title>
-                    <Link to={`http://localhost:9393/reviews/${review.id}`}>{review.title}</Link>
-                </Card.Title>
+                <Card.Title>{review.title}</Card.Title>
                 <Card.Text>
                     {review.location}
                 </Card.Text>
@@ -31,8 +29,8 @@ const PostCard = ({ reviews }) => {
                     {review.tags}
                 </Card.Text>
                 </Card.Body>
-            <Card.Title>Comments</Card.Title>
-            <Form >
+            <Card.Title>Comment</Card.Title>
+            <Form onSubmit={e => handleSubmit(e, review)} >
                 <Form.Label>Comment</Form.Label>
                 <Form.Control name="text" required type='text' onChange={handleChange} value={comment.value}/>
                 <br/>
@@ -59,6 +57,7 @@ const PostCard = ({ reviews }) => {
     
 
     const [comment, setComment] = useState({
+        review_id: "",
         text: "",
         rating: "",
         image: ""
@@ -73,10 +72,10 @@ const PostCard = ({ reviews }) => {
 
     const history = useHistory()
 
-    function handleSubmit(e) {
+    function handleSubmit(e, review) {
         e.preventDefault();
         const newComment = {
-            review_id: comment.review_id,
+            review_id: review.id,
             text: comment.text,
             rating: comment.rating,
             image: comment.image

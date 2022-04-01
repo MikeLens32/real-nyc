@@ -1,0 +1,18 @@
+.HomeBanner {
+    width: 100%
+}
+
+.LogoHome {
+    width: 20em;
+    height: 20em;
+    margin-left: 35%;
+    margin-right: 50%;
+}
+
+.Paragraph {
+    margin-left: 15%;
+    margin-right: 15%;
+    font-family: Georgia, serif;
+    font-size: large;
+    padding-bottom: 3em;
+}

@@ -49,7 +49,7 @@ const ReviewDetail = () => {
     }
     return (
         <div>
-            {displayReview}
+            {/* {displayReview} */}
         </div>
     )
 }

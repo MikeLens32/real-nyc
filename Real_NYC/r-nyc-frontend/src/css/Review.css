@@ -4,3 +4,7 @@ img {
     object-fit: cover;
     margin-bottom: 2em;
 }
+
+.ReviewBanner {
+    width: 100%
+}

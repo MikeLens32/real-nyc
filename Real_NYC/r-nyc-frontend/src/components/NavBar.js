@@ -4,6 +4,7 @@ import { Navbar, Nav, Container } from "react-bootstrap"
 import Welcome from "./Welcome";
 import NYC from "./NYC";
 import Review from "./Review";
+import "../css/NavBar.css"
 
 const NavBar = () => {
 
@@ -12,7 +13,9 @@ const NavBar = () => {
     <div>
       <Navbar bg="dark" variant={"dark"} expand="lg">
         <Container>
-          <Navbar.Brand as={Link} to={'/'}>NYC</Navbar.Brand>
+          <Navbar.Brand as={Link} to={'/'}>
+            <img className="Logo" src={window.location.origin + "/Logo_NYC.png"} alt="Logo" />
+            </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
