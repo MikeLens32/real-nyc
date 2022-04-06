@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
     Comment.all.to_json
   end
 
-  post "/comments/:id" do
+  post "/comments" do
     comment = Comment.create(text: params[:text], rating: params[:rating], review_id: params[:review_id], image: params[:image])
     # binding.pry
     if comment.id

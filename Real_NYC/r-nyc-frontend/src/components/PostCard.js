@@ -10,7 +10,7 @@ const PostCard = ({ reviews }) => {
 
 
     const mapReview = () => {
-        return reviews.map((review) => (
+        return reviewsList.map((review) => (
             <CardGroup className='CardGroup'>
             <Card style={{ width: '20em' }} key={review.id}>
                 <Card.Img variant="top" src={review.image} />
@@ -63,6 +63,8 @@ const PostCard = ({ reviews }) => {
         image: ""
     })
 
+    const [reviewsList, setReviewsList] = useState(reviews)
+
     function handleChange(e) {
         setComment({
             ...comment,
@@ -80,14 +82,28 @@ const PostCard = ({ reviews }) => {
             rating: comment.rating,
             image: comment.image
         }
-            fetch('http://127.0.0.1:9393/comments/:id', {
+            fetch('http://127.0.0.1:9393/comments', {
                 method: "POST",
                 headers:{
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(newComment)
             })
-            .then(() => history.push('/NYC'))
+            .then((r) => r.json())
+            .then((data) => {
+                const reviewIndex = reviewsList.findIndex((reviewObj) => {
+                    return review.id === reviewObj.id
+                })
+                const finalReview = {
+                    ...review,
+                    comments: [...review.comments, data]
+                }
+                setReviewsList([
+                    ...reviewsList.slice(0, reviewIndex),
+                    finalReview, 
+                    ...reviewsList.slice(reviewIndex +1)
+                ])
+            })
             console.log(newComment)
         }
 
