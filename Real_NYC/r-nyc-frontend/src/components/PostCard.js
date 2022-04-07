@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import '../css/PostCard.css'
 import Card from 'react-bootstrap/Card'
@@ -32,13 +32,13 @@ const PostCard = ({ reviews }) => {
             <Card.Title>Comment</Card.Title>
             <Form onSubmit={e => handleSubmit(e, review)} >
                 <Form.Label>Comment</Form.Label>
-                <Form.Control name="text" required type='text' onChange={handleChange} value={comment.value}/>
+                <Form.Control name="text" required type='text' onChange={handleChange} value={comment.text}/>
                 <br/>
                 <Form.Label>Rating</Form.Label>
-                <Form.Control name="rating" required type='number' onChange={handleChange} value={comment.value}/>
+                <Form.Control name="rating" required type='number' onChange={handleChange} value={comment.rating}/>
                 <br/>
                 <Form.Label>Image URL</Form.Label>
-                <Form.Control name="image" onChange={handleChange} value={comment.value}/>
+                <Form.Control name="image" onChange={handleChange} value={comment.image}/>
                 <br/>
                 <input type='submit' value='Comment'/>
             </Form>
@@ -72,6 +72,11 @@ const PostCard = ({ reviews }) => {
         })
     }
 
+    useEffect(() => {
+        setReviewsList(reviews)
+    }, [reviews])
+    
+
     const history = useHistory()
 
     function handleSubmit(e, review) {
@@ -103,6 +108,12 @@ const PostCard = ({ reviews }) => {
                     finalReview, 
                     ...reviewsList.slice(reviewIndex +1)
                 ])
+                setComment({
+                    review_id: "",
+                    text: "",
+                    rating: "",
+                    image: ""
+                })
             })
             console.log(newComment)
         }
