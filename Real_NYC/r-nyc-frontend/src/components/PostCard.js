@@ -1,60 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+// import { useHistory } from 'react-router-dom'
+import { v4 as uuid } from 'uuid'
 import '../css/PostCard.css'
 import Card from 'react-bootstrap/Card'
 import CardGroup from 'react-bootstrap/CardGroup'
 import Form from 'react-bootstrap/Form'
 
 const PostCard = ({ reviews }) => {
-
-
-
-    const mapReview = () => {
-        return reviewsList.map((review) => (
-            <CardGroup className='CardGroup'>
-            <Card style={{ width: '20em' }} key={review.id}>
-                <Card.Img variant="top" src={review.image} />
-                <Card.Body>
-                <Card.Title>{review.title}</Card.Title>
-                <Card.Text>
-                    {review.location}
-                </Card.Text>
-                <Card.Text>
-                    {review.description}
-                </Card.Text>
-                <Card.Text>
-                    {review.price}
-                </Card.Text>
-                <Card.Text>
-                    {review.tags}
-                </Card.Text>
-                </Card.Body>
-            <Card.Title>Comment</Card.Title>
-            <Form onSubmit={e => handleSubmit(e, review)} >
-                <Form.Label>Comment</Form.Label>
-                <Form.Control name="text" required type='text' onChange={handleChange} value={comment.text}/>
-                <br/>
-                <Form.Label>Rating</Form.Label>
-                <Form.Control name="rating" required type='number' onChange={handleChange} value={comment.rating}/>
-                <br/>
-                <Form.Label>Image URL</Form.Label>
-                <Form.Control name="image" onChange={handleChange} value={comment.image}/>
-                <br/>
-                <input type='submit' value='Comment'/>
-            </Form>
-            {review.comments.map((comment) => (
-                <Card.Body key={comment.review_id}>
-                    <Card.Img src={comment.image} />
-                    <Card.Text>{comment.text}</Card.Text>
-                    <Card.Text>{comment.rating}</Card.Text>
-                </Card.Body>
-            ))}
-            <br/>
-            </Card>
-            </CardGroup>
-        ))
-    }
     
+    const [reviewsList, setReviewsList] = useState(reviews)
 
     const [comment, setComment] = useState({
         review_id: "",
@@ -63,7 +17,7 @@ const PostCard = ({ reviews }) => {
         image: ""
     })
 
-    const [reviewsList, setReviewsList] = useState(reviews)
+    const unique_id = uuid()
 
     function handleChange(e) {
         setComment({
@@ -74,10 +28,14 @@ const PostCard = ({ reviews }) => {
 
     useEffect(() => {
         setReviewsList(reviews)
-    }, [reviews])
-    
 
-    const history = useHistory()
+    }, [reviews])
+        
+    function handleDelete(reviewId) {
+            fetch(`http://127.0.0.1:9393/reviews/${reviewId}`, { method: 'DELETE',})
+            .then(r => r.json())
+            .then((delData) => setReviewsList(reviewsList.filter((r) => r.id !== delData.id)))
+    }
 
     function handleSubmit(e, review) {
         e.preventDefault();
@@ -115,9 +73,75 @@ const PostCard = ({ reviews }) => {
                     image: ""
                 })
             })
-            console.log(newComment)
         }
 
+    const mapReview = () => {
+        return reviewsList.map((review) => (
+            <CardGroup className='CardGroup'>
+            <Card style={{ width: '20em' }} key={review.id}>
+                <Card.Img variant="top" src={review.image} />
+                <Card.Body >
+                <Card.Title>{review.title}</Card.Title>
+                <Card.Text>
+                    {review.location}
+                </Card.Text>
+                <Card.Text>
+                    {review.description}
+                </Card.Text>
+                <Card.Text>
+                    {review.price}
+                </Card.Text>
+                <Card.Text>
+                    {review.tags}
+                </Card.Text>
+                <input className='DeleteButton' onClick={() => handleDelete(review.id)} type='submit' value='delete' />
+                </Card.Body>
+                <ColoredLine color="black" />
+            <Form onSubmit={e => handleSubmit(e, review)} >
+                <Form.Label>Comment</Form.Label>
+                <Form.Control name="text" required type='text' onChange={handleChange} value={comment.text}/>
+                <br/>
+                <Form.Label>Rating</Form.Label>
+                <Form.Control name="rating" required type='number' min='1' max='5' onChange={handleChange} value={comment.rating}/>
+                <br/>
+                <Form.Label>Image URL</Form.Label>
+                <Form.Control name="image" onChange={handleChange} value={comment.image}/>
+                <br/>
+                <input className='CommentButton' type='submit' value='Comment'/>
+            </Form>
+            {review.comments.map((comment) => (
+                <Card.Body key={comment.unique_id}>
+                    <Card.Img src={comment.image} />
+                    <Card.Text>{comment.text}</Card.Text>
+                    <Card.Text>{comment.rating}</Card.Text>
+                </Card.Body>
+            ))}
+            <ColoredLineExpanded color="black" />
+            <br/>
+            </Card>
+            </CardGroup>
+        ))
+    }
+
+    const ColoredLine = ({ color }) => (
+        <hr
+            style={{
+                color: color,
+                backgroundColor: color,
+                height: 5
+            }}
+        />
+    );
+    
+    const ColoredLineExpanded = ({ color }) => (
+        <hr
+            style={{
+                color: color,
+                backgroundColor: color,
+                height: 20
+            }}
+        />
+    );
 
     return (
         <div>

@@ -5,4 +5,6 @@ class Review < ActiveRecord::Base
     validates :location, length: {minimum: 3}
     validates :description, presence: true, length: {maximum: 200}
     validates :price, numericality: true
+
+    
 end

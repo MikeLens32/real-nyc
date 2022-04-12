@@ -24,21 +24,10 @@ class ReviewsController < ApplicationController
     end
   end
 
-  patch "/reviews/:id" do
-    find_review
-    if @review && @review.update(params)
-      @review.to_json(include: :comments)
-    elsif !review
-      {errors: "Record not found with id:#{params[:id]}"}.to_json
-    else
-      @review.errors.full_messages.to_sentence
-    end
-  end
-
-  delete "/reviews/:id/delete" do
+  delete "/reviews/:id" do
     find_review
     if @review&.destroy
-      "Record was successfully destroyed"
+      @review.to_json
     else
       {errors: "Record not found with id:#{params[:id]}"}.to_json
     end
